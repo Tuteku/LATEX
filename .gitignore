@@ -1,0 +1,23 @@
+# Material del usuario (PDFs, DOCX) - no subir a GitHub
+fuentes/**/*.pdf
+fuentes/**/*.docx
+
+# Procesado (se regenera con make procesar)
+procesado/
+
+# PDFs compilados y archivos auxiliares de LaTeX
+resumenes/**/*.pdf
+resumenes/**/*.aux
+resumenes/**/*.log
+resumenes/**/*.out
+resumenes/**/*.toc
+resumenes/**/*.synctex.gz
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+Thumbs.db
+.DS_Store

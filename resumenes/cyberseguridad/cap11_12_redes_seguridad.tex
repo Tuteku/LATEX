@@ -1,0 +1,1311 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Codificación e idioma ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+
+% --- Geometría ---
+\usepackage[margin=2cm]{geometry}
+
+% --- Colores ---
+\usepackage[dvipsnames,table]{xcolor}
+\definecolor{darkblue}{HTML}{1B3A5C}
+\definecolor{medblue}{HTML}{2471A3}
+\definecolor{sectioncolor}{HTML}{1B3A5C}
+\definecolor{subsectioncolor}{HTML}{2E6EA6}
+\definecolor{conceptbg}{HTML}{EBF5FB}
+\definecolor{conceptborder}{HTML}{2471A3}
+\definecolor{keybg}{HTML}{FEF9E7}
+\definecolor{keyborder}{HTML}{D4AC0D}
+\definecolor{lightblue}{HTML}{D6EAF8}
+
+% --- Paquetes ---
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric,arrows.meta,calc,decorations.pathreplacing}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\graphicspath{{../../procesado/cyberseguridad/imagenes/}}
+\usepackage{float}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=darkblue,urlcolor=medblue}
+
+% --- Formato de secciones ---
+\titleformat{\section}{\Large\bfseries\color{sectioncolor}}{}{0em}{}[\vspace{-0.5em}\textcolor{sectioncolor}{\rule{\textwidth}{1.5pt}}]
+\titleformat{\subsection}{\large\bfseries\color{subsectioncolor}}{}{0em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{subsectioncolor}}{}{0em}{}
+
+% --- Cajas personalizadas ---
+\newcommand{\conceptbox}[2]{%
+  \vspace{0.5em}
+  \noindent
+  \begin{tikzpicture}
+    \node[fill=conceptbg, draw=conceptborder, line width=1pt, rounded corners=4pt,
+          inner sep=10pt, text width=\textwidth-26pt] (box) {%
+      {\bfseries\color{conceptborder}#1}\par\smallskip #2
+    };
+  \end{tikzpicture}
+  \vspace{0.5em}
+}
+
+\newcommand{\keybox}[2]{%
+  \vspace{0.5em}
+  \noindent
+  \begin{tikzpicture}
+    \node[fill=keybg, draw=keyborder, line width=1pt, rounded corners=4pt,
+          inner sep=10pt, text width=\textwidth-26pt] (box) {%
+      {\bfseries\color{keyborder}#1}\par\smallskip #2
+    };
+  \end{tikzpicture}
+  \vspace{0.5em}
+}
+
+% --- Encabezado y pie de página ---
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\color{darkblue}\textbf{Cap. 11--12: Redes y Seguridad}}
+\fancyhead[R]{\footnotesize\color{darkblue}Guía de Estudio}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{darkblue}\leaders\hrule height \headrulewidth\hfill}}
+
+% ============================================================
+\begin{document}
+
+% --- Portada ---
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+  {\Huge\bfseries\color{darkblue}Guía de Estudio\\[0.5cm]}
+  {\LARGE\color{medblue}Capítulos 11 y 12\\[1cm]}
+  {\Large Dispositivos de Comunicación de Redes\\[0.3cm]
+  Infraestructura de Seguridad de Red\\[2cm]}
+  \textcolor{darkblue}{\rule{0.6\textwidth}{1.5pt}}\\[1.5cm]
+  {\large Ingeniería --- Ciberseguridad}\\[0.5cm]
+  {\large\today}
+  \vfill
+\end{titlepage}
+
+% --- Tabla de contenidos ---
+\tableofcontents
+\newpage
+
+% ============================================================
+% CAPÍTULO 11
+% ============================================================
+\section{Capítulo 11: Dispositivos de Comunicación de Redes}
+
+\subsection{11.0.2 Objetivos del módulo}
+
+\conceptbox{Objetivo del módulo}{%
+\textbf{Título:} Dispositivos de comunicación de redes.\\
+\textbf{Objetivo general:} Explicar cómo los dispositivos de red permiten la comunicación por redes cableadas e inalámbricas.\\[0.3em]
+El módulo se divide en dos grandes temas:
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Dispositivos de red:} estudio de dispositivos finales, intermediarios, routers, switches, VLANs, STP y switches multicapa.
+  \item \textbf{Comunicaciones inalámbricas:} estructura de tramas 802.11, CSMA/CA, asociación con APs, modos de entrega y dispositivos inalámbricos empresariales.
+\end{enumerate}
+}
+
+% ============================================================
+\subsection{11.1 Dispositivos de red}
+
+\subsubsection{11.1.1 Dispositivos finales}
+
+Los \textbf{dispositivos finales} son el origen o el destino de los mensajes transmitidos a través de la red. Cada dispositivo final posee una dirección única que lo identifica en la red. Algunos ejemplos de dispositivos finales son:
+
+\begin{itemize}[leftmargin=2em]
+  \item PCs de escritorio y laptops
+  \item Servidores (web, correo, archivos)
+  \item Impresoras de red
+  \item Teléfonos IP (VoIP)
+  \item Tablets y dispositivos móviles
+  \item Equipos de TelePresence
+\end{itemize}
+
+Además de los dispositivos finales, existen los \textbf{dispositivos intermediarios}, que facilitan la comunicación entre los dispositivos finales. Entre ellos se encuentran:
+
+\begin{itemize}[leftmargin=2em]
+  \item Router inalámbrico
+  \item Switch LAN
+  \item Router
+  \item Switch multicapa
+  \item Dispositivos de firewall
+\end{itemize}
+
+Los \textbf{medios de red} son los canales físicos o lógicos por los cuales se transmiten los datos:
+
+\begin{itemize}[leftmargin=2em]
+  \item Medios inalámbricos (ondas de radio)
+  \item Medios LAN (cable UTP, fibra óptica)
+  \item Medios WAN (enlaces seriales, fibra de larga distancia)
+\end{itemize}
+
+\conceptbox{Terminología importante}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{NIC (Network Interface Card):}] Tarjeta de interfaz de red. Conecta físicamente el dispositivo final a la red. Convierte los datos en señales que pueden viajar por el medio de red.
+  \item[\textbf{Puerto físico:}] Conector o toma en un dispositivo de red donde se conectan los medios (cable Ethernet, fibra óptica, etc.).
+  \item[\textbf{Interfaz:}] Puertos especializados en dispositivos de red que se conectan a redes individuales. Los puertos de un router se denominan \emph{interfaces de red}.
+\end{description}
+\textbf{Nota:} Los términos \emph{puerto} e \emph{interfaz} se usan indistintamente en muchos contextos.
+}
+
+% --- TikZ: Diagrama de dispositivos ---
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=3pt, minimum width=2cm, minimum height=0.8cm, font=\small, align=center},
+  enddev/.style={box, fill=blue!10, draw=medblue},
+  intdev/.style={box, fill=green!10, draw=green!50!black},
+  media/.style={box, fill=orange!10, draw=orange!70!black},
+  >=Stealth
+]
+  % End devices
+  \node[enddev] (pc) at (0,4) {PC};
+  \node[enddev] (srv) at (3,4) {Servidor};
+  \node[enddev] (prn) at (6,4) {Impresora};
+  \node[above=0.3cm of srv, font=\bfseries\color{medblue}] {Dispositivos finales};
+
+  % Intermediary devices
+  \node[intdev] (router) at (1.5,2) {Router};
+  \node[intdev] (switch) at (4.5,2) {Switch};
+  \node[above=0.3cm of router, xshift=1.5cm, font=\bfseries\color{green!50!black}] {Dispositivos intermediarios};
+
+  % Network media
+  \node[media] (wifi) at (0,0) {Inalámbrico};
+  \node[media] (lan) at (3,0) {LAN};
+  \node[media] (wan) at (6,0) {WAN};
+  \node[above=0.3cm of lan, font=\bfseries\color{orange!70!black}] {Medios de red};
+
+  % Connections
+  \draw[->,thick,gray] (pc) -- (router);
+  \draw[->,thick,gray] (srv) -- (switch);
+  \draw[->,thick,gray] (prn) -- (switch);
+  \draw[->,thick,gray] (router) -- (switch);
+  \draw[->,thick,gray] (router) -- (wifi);
+  \draw[->,thick,gray] (switch) -- (lan);
+  \draw[->,thick,gray] (router) -- (wan);
+\end{tikzpicture}
+\caption{Relación entre dispositivos finales, intermediarios y medios de red.}
+\end{figure}
+
+% ============================================================
+\subsubsection{11.1.3 Routers}
+
+Los routers operan en la \textbf{Capa 3 (Red)} del modelo OSI. Su función principal es interconectar sitios remotos y segmentar dominios de difusión (broadcast). Un router es el dispositivo encargado de tomar decisiones de enrutamiento basándose en direcciones IP.
+
+\conceptbox{Dos funciones principales del router}{%
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Determinar rutas:} Cada router mantiene una \emph{tabla de enrutamiento}, que es una base de datos de redes conocidas. A partir de ella, el router elige la mejor ruta para enviar un paquete hacia su destino.
+  \item \textbf{Reenviar paquetes (función de switching):} El router acepta un paquete en una interfaz de entrada y lo reenvía por la interfaz de salida adecuada, según la información de la tabla de enrutamiento.
+\end{enumerate}
+}
+
+Cuando un router recibe un paquete, realiza los siguientes \textbf{tres pasos}:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Desencapsula} el encabezado y la cola de la trama de Capa 2 para acceder al paquete de Capa 3.
+  \item \textbf{Examina la dirección IP de destino} del paquete y busca la mejor ruta coincidente en la tabla de enrutamiento.
+  \item Si encuentra una ruta válida, \textbf{encapsula el paquete} en una nueva trama de Capa 2 (con nuevas direcciones MAC) y lo \textbf{reenvía} por la interfaz de salida correspondiente.
+\end{enumerate}
+
+\keybox{Dato clave para examen}{%
+Las \textbf{direcciones IP de Capa 3 NO cambian} durante todo el trayecto del paquete de origen a destino. Sin embargo, las \textbf{direcciones MAC de Capa 2 SÍ cambian en cada salto} (cada vez que el paquete pasa por un router). Esto se debe a que la encapsulación de Capa 2 se rehace en cada segmento de red.
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{11_img32.png}
+\caption{Las IPs se mantienen, las MACs cambian en cada salto (PC1 $\rightarrow$ S1 $\rightarrow$ R1 $\rightarrow$ R2 $\rightarrow$ S2 $\rightarrow$ PC2).}
+\end{figure}
+
+% ============================================================
+\subsubsection{11.1.5 Proceso de decisión de reenvío de paquetes}
+
+Cuando un router examina la dirección IP de destino de un paquete, existen \textbf{tres posibilidades}:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Red conectada directamente:} La red de destino está directamente conectada a una interfaz del router. El router resuelve la dirección MAC del destino final utilizando \textbf{ARP} (para IPv4) o \textbf{Neighbor Solicitation (NS)} (para IPv6), y luego reenvía el paquete directamente.
+  \item \textbf{Red remota:} La red de destino es accesible a través de otro router. El router resuelve la dirección MAC del \textbf{router de siguiente salto} (no la del destino final) mediante ARP o ND, y luego reenvía el paquete hacia ese siguiente salto.
+  \item \textbf{Sin coincidencia en la tabla de enrutamiento:} No existe ninguna entrada que coincida con la red de destino. El paquete se \textbf{descarta} y no se reenvía.
+\end{enumerate}
+
+\keybox{Recuerda}{%
+Cuando el destino está en una red remota, el router \textbf{nunca} resuelve la MAC del destino final. Siempre resuelve la MAC del \textbf{siguiente salto} (next hop), es decir, la interfaz del próximo router en la ruta.
+}
+
+% ============================================================
+\subsubsection{11.1.6 Información de enrutamiento}
+
+La \textbf{tabla de enrutamiento} es un archivo almacenado en la RAM del router que contiene información sobre las rutas conocidas. Cada entrada asocia una red de destino con un siguiente salto o interfaz de salida.
+
+\conceptbox{Tipos de rutas}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{Rutas directamente conectadas:}] Se generan automáticamente a partir de las interfaces activas del router. Si una interfaz tiene una dirección IP configurada y está habilitada, la red asociada aparece como ruta directamente conectada.
+  \item[\textbf{Rutas remotas:}] Corresponden a redes conectadas a otros routers. Pueden agregarse de forma estática (configuración manual) o dinámica (mediante protocolos de enrutamiento).
+\end{description}
+}
+
+Existen cuatro formas de agregar entradas a la tabla de enrutamiento:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Interfaces de ruta local} (disponible en IOS 15 y posterior)
+  \item \textbf{Interfaces conectadas directamente}
+  \item \textbf{Rutas estáticas} (configuradas manualmente por el administrador)
+  \item \textbf{Protocolos de enrutamiento dinámico} (EIGRP, OSPF, RIP, etc.)
+\end{enumerate}
+
+\vspace{0.5em}
+\begin{table}[H]
+\centering
+\caption{Protocolos de enrutamiento dinámico}
+\rowcolors{2}{white}{lightblue}
+\begin{tabular}{>{\bfseries}l l l l l}
+\toprule
+\textbf{Protocolo} & \textbf{IPv4} & \textbf{IPv6} & \textbf{Tipo} & \textbf{Uso} \\
+\midrule
+RIP & RIPv2 & RIPng & Vector distancia & Limitado, no escala \\
+EIGRP & EIGRP & EIGRP para IPv6 & Híbrido (Cisco) & Buena escalabilidad \\
+OSPF & OSPFv2 & OSPFv3 & Estado de enlace & Buena escalabilidad \\
+IS-IS & IS-IS & IS-IS para IPv6 & Estado de enlace & Usado en ISPs \\
+BGP & BGP-4 & BGP-MP & Vector de ruta & Entre ISPs (exterior) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\keybox{Gateway interior vs. exterior}{%
+\textbf{Protocolos de gateway interior (IGP):} RIP, EIGRP, OSPF, IS-IS --- se usan \emph{dentro} de un sistema autónomo (organización).\\
+\textbf{Protocolo de gateway exterior (EGP):} BGP --- se usa \emph{entre} sistemas autónomos (por ejemplo, entre ISPs en Internet).
+}
+
+% ============================================================
+\subsubsection{11.1.7 Reenvío de paquetes}
+
+La encapsulación de Capa 2 que utiliza el router depende de la \textbf{interfaz de salida}:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Interfaz Ethernet:} Se encapsula en una trama Ethernet. Es necesario conocer la dirección MAC del siguiente salto, que se resuelve mediante ARP (IPv4) o ND (IPv6).
+  \item \textbf{Interfaz serial punto a punto:} Se encapsula en PPP o HDLC. No se utilizan direcciones MAC; el enlace serial es equivalente a una conexión de difusión directa entre dos extremos.
+\end{itemize}
+
+\conceptbox{Ejemplo detallado: PC1 $\rightarrow$ R1 $\rightarrow$ R2 $\rightarrow$ R3 $\rightarrow$ PC2}{%
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{PC1 envía a su gateway (R1):} PC1 busca la dirección MAC de R1 en su caché ARP. Si no la encuentra, envía una solicitud ARP (ARP request) para obtenerla. Una vez resuelta, encapsula el paquete con la MAC de R1 como destino.
+  \item \textbf{R1 reenvía a R2 (interfaz Ethernet):} R1 desencapsula la trama, consulta su tabla de enrutamiento, y encapsula el paquete en una nueva trama Ethernet con la MAC de la interfaz de R2 como destino (resuelta via ARP).
+  \item \textbf{R2 reenvía a R3 (interfaz serial):} R2 desencapsula, consulta la tabla de enrutamiento, y encapsula el paquete en HDLC o PPP. No necesita dirección MAC porque es un enlace serial punto a punto.
+  \item \textbf{R3 reenvía a PC2 (interfaz Ethernet):} R3 desencapsula, consulta la tabla de enrutamiento y detecta que PC2 está en una red directamente conectada. Resuelve la MAC de PC2 via ARP y envía la trama.
+\end{enumerate}
+}
+
+% ============================================================
+\subsubsection{11.1.9 Concentradores, puentes y switches de LAN}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{11_img35.png}
+\caption{Íconos de Hub, Bridge y Switch LAN.}
+\end{figure}
+
+\conceptbox{Hub (Concentrador)}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Es un \textbf{repetidor multipuerto} que opera en la \textbf{Capa 1} (física) del modelo OSI.
+  \item Reenvía la señal eléctrica a \textbf{todos} los puertos (no lee ni interpreta direcciones MAC).
+  \item Todos los puertos comparten un \textbf{único dominio de colisión}.
+  \item Utiliza \textbf{CSMA/CD} (Carrier Sense Multiple Access / Collision Detection) para manejar colisiones.
+  \item \textbf{Tecnología obsoleta}; ha sido reemplazado por switches.
+\end{itemize}
+}
+
+\conceptbox{Bridge (Puente)}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Dispositivo con \textbf{2 interfaces} que conecta segmentos de red (típicamente hubs).
+  \item \textbf{Divide dominios de colisión} en dos segmentos separados.
+  \item Toma decisiones de reenvío basándose en \textbf{direcciones MAC}.
+  \item \textbf{Tecnología obsoleta}; reemplazado por switches.
+\end{itemize}
+}
+
+\conceptbox{Switch de LAN}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Funcionalmente es un \textbf{bridge multipuerto}.
+  \item Cada puerto constituye un \textbf{dominio de colisión separado}, lo que elimina prácticamente las colisiones.
+  \item Toma decisiones de reenvío basándose en \textbf{direcciones MAC}.
+  \item Es el dispositivo estándar actual para redes LAN.
+\end{itemize}
+}
+
+% ============================================================
+\subsubsection{11.1.10 Funcionamiento del switching}
+
+El switch construye y mantiene automáticamente una \textbf{tabla de direcciones MAC} (también llamada tabla CAM --- Content Addressable Memory). Las entradas en esta tabla \textbf{expiran a los 5 minutos} de inactividad.
+
+El proceso de switching consta de \textbf{2 pasos fundamentales}:
+
+\textbf{Paso 1 --- APRENDIZAJE (examina la MAC de ORIGEN):}
+\begin{itemize}[leftmargin=2em]
+  \item Si la MAC de origen \textbf{no está en la tabla} $\rightarrow$ el switch la agrega junto con el número de puerto de entrada.
+  \item Si la MAC de origen \textbf{ya existe} en la tabla $\rightarrow$ actualiza el temporizador de expiración (renueva los 5 minutos).
+  \item Si la MAC de origen existe pero está asociada a \textbf{otro puerto} $\rightarrow$ reemplaza la entrada con el puerto nuevo (el dispositivo se movió).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img65.png}
+\caption{Paso 1: El switch aprende la MAC de origen y el puerto de entrada.}
+\end{figure}
+
+\textbf{Paso 2 --- REENVÍO (examina la MAC de DESTINO):}
+\begin{itemize}[leftmargin=2em]
+  \item Si la MAC de destino \textbf{está en la tabla} $\rightarrow$ reenvía la trama \textbf{solo por ese puerto} específico (reenvío unicast).
+  \item Si la MAC de destino \textbf{NO está en la tabla} $\rightarrow$ realiza \textbf{flooding} (inundación): reenvía la trama por \textbf{todos los puertos excepto} el puerto de entrada.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img21.png}
+\caption{Paso 2: Si la MAC destino no está en la tabla, el switch hace flooding.}
+\end{figure}
+
+\keybox{Resumen de switching}{%
+\textbf{Aprendizaje} = mira la MAC de \emph{origen} para llenar la tabla.\\
+\textbf{Reenvío} = mira la MAC de \emph{destino} para decidir por dónde enviar.\\
+\textbf{Flooding} = cuando no conoce el destino, envía por todos los puertos menos el de entrada.
+}
+
+% ============================================================
+\subsubsection{11.1.12 VLAN}
+
+Una \textbf{VLAN (Virtual LAN)} es una agrupación \textbf{lógica} de dispositivos, independiente de su ubicación física en la red. Cada VLAN constituye un \textbf{dominio de difusión separado}, lo que significa que el tráfico de broadcast queda contenido dentro de la VLAN y no se propaga a dispositivos en otras VLANs.
+
+Para que dispositivos de \textbf{VLANs distintas} puedan comunicarse entre sí, se necesita un \textbf{router} o un \textbf{switch multicapa} que realice enrutamiento inter-VLAN.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img50.png}
+\caption{VLANs segmentan por departamento independientemente del piso físico (VLAN~2: IT, VLAN~3: HR, VLAN~4: Sales).}
+\end{figure}
+
+\conceptbox{Beneficios de las VLANs}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Segmentación por función/departamento:} Los dispositivos se agrupan lógicamente según su función, no según su ubicación física.
+  \item \textbf{Reducción de dominios de difusión:} Menos tráfico de broadcast implica mejor rendimiento general de la red.
+  \item \textbf{Aislamiento de tráfico y seguridad:} El departamento de Recursos Humanos no puede ver el tráfico de Ventas, por ejemplo.
+  \item \textbf{Control de acceso:} Se pueden aplicar \textbf{ACLs} (Listas de Control de Acceso) para controlar de forma granular el tráfico inter-VLAN.
+\end{itemize}
+}
+
+% ============================================================
+\subsubsection{11.1.13 STP (Spanning Tree Protocol)}
+
+Cuando existe \textbf{redundancia física} en una red de switches (múltiples caminos entre los mismos dispositivos), se generan \textbf{bucles de Capa 2} y \textbf{duplicación de tramas}. Estos problemas pueden saturar la red rápidamente y provocar una tormenta de broadcast.
+
+El \textbf{STP (Spanning Tree Protocol)} resuelve este problema \textbf{bloqueando puertos redundantes} para garantizar que exista una \textbf{sola ruta lógica libre de bucles} entre cualquier par de dispositivos.
+
+Características clave:
+\begin{itemize}[leftmargin=2em]
+  \item Los puertos bloqueados \textbf{no pasan datos de usuario}, pero \textbf{sí pasan BPDUs} (Bridge Protocol Data Units), que son las tramas de control de STP.
+  \item Si un enlace activo falla, STP \textbf{recalcula la topología} y desbloquea un puerto alternativo para restaurar la conectividad.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  sw/.style={draw, fill=blue!10, rounded corners=3pt, minimum width=2cm, minimum height=1cm, font=\small\bfseries},
+  >=Stealth
+]
+  \node[sw] (s1) at (0,3) {Switch 1};
+  \node[sw] (s2) at (5,3) {Switch 2};
+  \node[sw] (s3) at (5,0) {Switch 3};
+  \node[sw] (s4) at (0,0) {Switch 4};
+
+  % Active links (solid)
+  \draw[very thick, medblue] (s1) -- (s2) node[midway, above, font=\footnotesize] {Activo};
+  \draw[very thick, medblue] (s2) -- (s3) node[midway, right, font=\footnotesize] {Activo};
+  \draw[very thick, medblue] (s3) -- (s4) node[midway, below, font=\footnotesize] {Activo};
+
+  % Blocked link (dashed, red)
+  \draw[very thick, dashed, red!70!black] (s4) -- (s1) node[midway, left, font=\footnotesize, text=red!70!black, align=center] {Bloqueado\\por STP};
+
+  % Note
+  \node[below=0.8cm of s3, xshift=-2.5cm, font=\small\itshape, text width=7cm, align=center] {STP bloquea un enlace redundante para evitar bucles.\\Si falla un enlace activo, STP desbloquea la ruta alternativa.};
+\end{tikzpicture}
+\caption{STP: 4 switches en topología cuadrada. Un enlace se bloquea para evitar bucles.}
+\end{figure}
+
+% ============================================================
+\subsubsection{11.1.14 Switch multicapa (Capa 3)}
+
+Un \textbf{switch multicapa} combina las funciones de \textbf{switching de Capa 2} con \textbf{enrutamiento de Capa 3}. Es capaz de tomar decisiones de reenvío basándose tanto en direcciones MAC como en direcciones IP.
+
+Este tipo de switch ofrece dos tipos de interfaces de Capa 3:
+
+\conceptbox{Puerto enrutado}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Es una interfaz pura de Capa 3, similar a la interfaz de un router.
+  \item \textbf{No pertenece} a ninguna VLAN.
+  \item \textbf{STP no aplica} a esta interfaz.
+  \item En switches Cisco IOS, \textbf{no admite subinterfaces}.
+  \item Se configura directamente con una dirección IP.
+\end{itemize}
+}
+
+\conceptbox{SVI (Interfaz Virtual del Switch)}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Es una interfaz \textbf{virtual} asociada a una VLAN específica.
+  \item Permite el \textbf{enrutamiento inter-VLAN}: los paquetes entre diferentes VLANs se enrutan a través de las SVIs.
+  \item Se configura con una dirección IP y se le pueden aplicar ACLs.
+  \item Se puede crear una SVI para \textbf{cualquier VLAN existente} en el switch.
+\end{itemize}
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{11_img36.png}
+\caption{Router con interfaces físicas (izq.) vs Switch multicapa con SVIs (der.).}
+\end{figure}
+
+% ============================================================
+% 11.2 COMUNICACIONES INALÁMBRICAS
+% ============================================================
+\subsection{11.2 Comunicaciones inalámbricas}
+
+\subsubsection{11.2.3 Estructura del Frame 802.11}
+
+La trama 802.11 es similar a la trama Ethernet pero contiene más campos, necesarios para gestionar las comunicaciones inalámbricas.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  field/.style={draw, minimum height=1.2cm, font=\tiny, align=center, fill=lightblue},
+  >=Stealth
+]
+  % Frame fields
+  \node[field, minimum width=1.5cm] (fc) at (0,0) {Control\\de marco};
+  \node[field, minimum width=1.2cm, right=0pt of fc] (dur) {Duración};
+  \node[field, minimum width=1.4cm, right=0pt of dur] (a1) {Dirección\\1};
+  \node[field, minimum width=1.4cm, right=0pt of a1] (a2) {Dirección\\2};
+  \node[field, minimum width=1.4cm, right=0pt of a2] (a3) {Dirección\\3};
+  \node[field, minimum width=1.3cm, right=0pt of a3] (sc) {Ctrl de\\secuencia};
+  \node[field, minimum width=1.4cm, right=0pt of sc] (a4) {Dirección\\4};
+  \node[field, minimum width=1.8cm, right=0pt of a4, fill=orange!15] (pay) {Payload};
+  \node[field, minimum width=1cm, right=0pt of pay] (fcs) {FCS};
+
+  % Header brace
+  \draw[decorate, decoration={brace, amplitude=6pt, mirror}, thick, medblue]
+    (fc.south west) -- (a4.south east) node[midway, below=8pt, font=\small\bfseries, text=medblue] {Encabezado MAC};
+
+  % Labels below
+  \node[below=1.2cm of fc, font=\scriptsize, text width=2.2cm, align=center] {Versión, tipo de trama, seguridad};
+  \node[below=1.2cm of a1, font=\scriptsize, text width=2cm, align=center] {MAC receptor};
+  \node[below=1.2cm of a2, font=\scriptsize, text width=2cm, align=center] {MAC emisor};
+  \node[below=1.2cm of a3, font=\scriptsize, text width=2cm, align=center] {MAC gateway};
+  \node[below=1.2cm of a4, font=\scriptsize, text width=2cm, align=center] {Solo en\\modo ad hoc};
+\end{tikzpicture}
+\caption{Estructura de la trama 802.11 con sus campos principales.}
+\end{figure}
+
+\conceptbox{Campos de la trama 802.11}{%
+\begin{description}[leftmargin=1em, style=nextline, font=\bfseries]
+  \item[Control de trama:] Contiene la versión del protocolo, el tipo de trama, el tipo de dirección, la administración de energía y la configuración de seguridad.
+  \item[Duración:] Indica el tiempo restante necesario para recibir la siguiente transmisión de trama.
+  \item[Dirección 1:] Dirección MAC del dispositivo o AP \emph{receptor} inalámbrico.
+  \item[Dirección 2:] Dirección MAC del dispositivo o AP \emph{emisor} inalámbrico.
+  \item[Dirección 3:] Dirección MAC del destino (por ejemplo, la interfaz del router o gateway de la red).
+  \item[Control de Secuencia:] Información para el control de secuencia y la gestión de tramas fragmentadas.
+  \item[Dirección 4:] Solo se utiliza en \emph{modo ad hoc} (comunicación directa entre dispositivos sin AP).
+  \item[Payload:] Los datos reales que se transmiten.
+  \item[FCS (Frame Check Sequence):] Control de errores de Capa 2 para verificar la integridad de la trama.
+\end{description}
+}
+
+% ============================================================
+\subsubsection{11.2.4 CSMA/CA}
+
+Las redes WLAN son \textbf{half-duplex} y comparten un medio de transmisión común (el aire). Un cliente inalámbrico \textbf{no puede escuchar mientras envía}, lo que hace \textbf{imposible detectar colisiones} durante la transmisión. Por esta razón, se utiliza \textbf{CSMA/CA} (Carrier Sense Multiple Access / Collision Avoidance) en lugar de CSMA/CD.
+
+\conceptbox{Proceso CSMA/CA paso a paso}{%
+\begin{enumerate}[leftmargin=2em]
+  \item El dispositivo \textbf{escucha el canal} para verificar si está inactivo (idle).
+  \item Envía un mensaje \textbf{RTS (Ready to Send)} al AP solicitando acceso dedicado al medio.
+  \item Espera recibir un mensaje \textbf{CTS (Clear to Send)} del AP, que le garantiza acceso exclusivo.
+  \item Si \textbf{NO recibe CTS} $\rightarrow$ espera un tiempo aleatorio (backoff) y reinicia el proceso.
+  \item Después de recibir CTS, \textbf{transmite la información}.
+  \item Todas las transmisiones deben ser \textbf{reconocidas con un ACK}. Si no se recibe ACK, se asume que ocurrió una colisión y se reinicia el proceso.
+\end{enumerate}
+}
+
+\keybox{Diferencia clave: CSMA/CD vs CSMA/CA}{%
+\textbf{CSMA/CD} (Ethernet cableado): \emph{detecta} colisiones mientras transmite.\\
+\textbf{CSMA/CA} (WLAN inalámbrico): \emph{evita} colisiones antes de transmitir, usando RTS/CTS.\\
+La razón fundamental es que en medios inalámbricos, un dispositivo no puede enviar y recibir simultáneamente.
+}
+
+% ============================================================
+\subsubsection{11.2.5 Asociación de AP de cliente inalámbrico}
+
+El proceso de conexión de un cliente inalámbrico a un AP consta de \textbf{tres etapas}:
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Descubrir} un AP inalámbrico (detección).
+  \item \textbf{Autenticar} con el AP (verificación de credenciales).
+  \item \textbf{Asociarse} con el AP (establecimiento de conexión).
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{11_img2.png}
+\caption{Proceso de asociación: Detectar $\rightarrow$ Autenticar $\rightarrow$ Asociar.}
+\end{figure}
+
+\conceptbox{Parámetros que deben acordarse entre cliente y AP}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{SSID (Service Set Identifier):}] Nombre de la red inalámbrica. Varios APs pueden compartir un mismo SSID para crear una red extendida.
+  \item[\textbf{Contraseña:}] Clave para autenticarse con el AP.
+  \item[\textbf{Modo de red:}] Estándares WLAN 802.11 soportados (a/b/g/n/ac/ad). Los APs pueden funcionar en modo combinado para soportar múltiples estándares.
+  \item[\textbf{Modo de seguridad:}] Protocolo de seguridad utilizado: WEP, WPA o WPA2. Siempre se debe habilitar el nivel más alto disponible (WPA2 como mínimo).
+  \item[\textbf{Configuración de canales:}] Bandas de frecuencia usadas para transmitir datos. Se puede configurar automáticamente o manualmente para evitar interferencias.
+\end{description}
+}
+
+% ============================================================
+\subsubsection{11.2.6 Modo de entrega pasiva y activa}
+
+Los clientes inalámbricos pueden descubrir APs disponibles mediante dos modos:
+
+\conceptbox{Modo pasivo}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item El AP anuncia su servicio enviando periódicamente \textbf{tramas de señal (beacons)} de difusión.
+  \item Los beacons contienen: nombre del SSID, estándares admitidos y configuración de seguridad.
+  \item Los clientes escuchan pasivamente y descubren qué redes y APs existen en el área.
+\end{itemize}
+}
+
+\conceptbox{Modo activo}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item El cliente debe conocer previamente el nombre del SSID.
+  \item El cliente transmite una \textbf{solicitud de sondeo (probe request)} que incluye el SSID deseado y los estándares compatibles.
+  \item Los APs configurados con ese SSID responden con una \textbf{respuesta de sonda (probe response)} que contiene: SSID, estándares y configuración de seguridad.
+  \item Los APs con \textbf{transmisión de SSID deshabilitada NO responden} a solicitudes de sondeo genéricas.
+\end{itemize}
+}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  device/.style={draw, rounded corners=3pt, minimum width=1.8cm, minimum height=1cm, font=\small\bfseries, fill=blue!8},
+  >=Stealth
+]
+  % Passive mode
+  \node[font=\bfseries\color{medblue}] at (-3.5,2.5) {Modo Pasivo};
+  \node[device] (ap1) at (-5,1) {AP};
+  \node[device] (cl1) at (-2,1) {Cliente};
+  \draw[->,thick,medblue] (ap1) -- (cl1) node[midway, above, font=\scriptsize] {Beacon};
+  \draw[->,thick,medblue] ([yshift=-3mm]ap1.east) -- ([yshift=-3mm]cl1.west) node[midway, below, font=\scriptsize] {Beacon};
+
+  % Active mode
+  \node[font=\bfseries\color{medblue}] at (3.5,2.5) {Modo Activo};
+  \node[device] (cl2) at (2,1) {Cliente};
+  \node[device] (ap2) at (5,1) {AP};
+  \draw[->,thick,orange!80!black] (cl2) -- (ap2) node[midway, above, font=\scriptsize] {Probe Request};
+  \draw[->,thick,medblue] ([yshift=-3mm]ap2.west) -- ([yshift=-3mm]cl2.east) node[midway, below, font=\scriptsize] {Probe Response};
+
+  % Divider
+  \draw[dashed, gray] (0,-0.3) -- (0,2.5);
+\end{tikzpicture}
+\caption{Modo pasivo (AP envía beacons) vs Modo activo (cliente envía probe request).}
+\end{figure}
+
+% ============================================================
+\subsubsection{11.2.8 Dispositivos inalámbricos --- AP, LWAP y WLC}
+
+Un \textbf{router inalámbrico doméstico} integra las funciones de router, switch y AP en un solo dispositivo, lo cual es adecuado para redes pequeñas.
+
+Sin embargo, en \textbf{redes grandes} (empresas, campus) se utilizan dispositivos especializados:
+
+\conceptbox{Dispositivos inalámbricos empresariales}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{AP autónomo:}] Funciona de manera independiente. Cada AP se configura y administra por separado. Adecuado para redes con pocos APs.
+  \item[\textbf{LWAP (Lightweight AP):}] Access Point liviano, controlado centralmente por un WLC. Los LWAP solo se encargan de reenviar datos entre la red inalámbrica y el controlador.
+  \item[\textbf{WLC (Wireless LAN Controller):}] Controlador centralizado que administra todos los LWAPs de la red. Define los SSID, la autenticación, las políticas de seguridad y los canales. Simplifica enormemente la configuración y el monitoreo cuando hay muchos APs.
+\end{description}
+}
+
+\keybox{Ventaja del modelo LWAP + WLC}{%
+En lugar de configurar 100 APs individualmente, un solo WLC centraliza toda la administración. Los LWAP se ``registran'' con el WLC y reciben su configuración automáticamente. Esto reduce la carga administrativa y permite una gestión coherente de toda la infraestructura inalámbrica.
+}
+
+\newpage
+% ============================================================
+% CAPÍTULO 12
+% ============================================================
+\section{Capítulo 12: Infraestructura de Seguridad de Red}
+
+\subsection{12.1 Diseño de red}
+
+\subsubsection{12.1.1 Representaciones de red}
+
+Los \textbf{diagramas de red} utilizan símbolos estandarizados para representar dispositivos y conexiones. Un \textbf{diagrama de topología} es una representación visual de la infraestructura de red que muestra cómo se interconectan los dispositivos.
+
+\conceptbox{Terminología de componentes de red}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{NIC (Network Interface Card):}] Conecta físicamente el dispositivo final a la red. Traduce los datos del dispositivo en señales que el medio de red puede transportar.
+  \item[\textbf{Puerto físico:}] Conector en un dispositivo de red donde se conectan los medios físicos (cable UTP, fibra, etc.).
+  \item[\textbf{Interfaz:}] Puertos especializados que se conectan a redes individuales. Cada interfaz pertenece a una red diferente.
+\end{description}
+}
+
+% ============================================================
+\subsubsection{12.1.3 Redes de muchos tamaños}
+
+Las redes se clasifican según su tamaño y alcance:
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Redes domésticas / SOHO (Small Office Home Office):} Diseñadas para compartir recursos entre pocos dispositivos. Típicamente incluyen un router inalámbrico que integra funciones de router, switch y AP.
+  \item \textbf{Redes medianas a grandes:} Utilizadas por corporaciones y escuelas. Pueden tener cientos o miles de hosts interconectados y requieren infraestructura más compleja con múltiples switches, routers y servidores.
+  \item \textbf{Internet:} La red más extensa del mundo. Se define como una ``red de redes'': una colección de redes privadas y públicas interconectadas mediante protocolos estándar (TCP/IP).
+  \item \textbf{Red entre pares (Peer-to-Peer):} Común en pequeñas empresas. Las PCs funcionan simultáneamente como servidores y clientes, sin necesidad de un servidor dedicado.
+\end{itemize}
+
+% ============================================================
+\subsubsection{12.1.4 LAN y WAN}
+
+Las infraestructuras de red varían en: tamaño del área geográfica, cantidad de usuarios conectados, servicios disponibles y área de responsabilidad administrativa.
+
+\conceptbox{LAN --- Red de Área Local}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Cubre un \textbf{área geográfica pequeña}: un departamento, un hogar, una empresa pequeña o un piso de un edificio.
+  \item Proporciona acceso a usuarios y dispositivos finales dentro de esa área.
+  \item Generalmente administrada por una sola organización.
+  \item Ofrece \textbf{alta velocidad} de transferencia (típicamente 100 Mbps a 10 Gbps).
+\end{itemize}
+}
+
+\conceptbox{WAN --- Red de Área Amplia}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Interconecta LANs} en áreas geográficas extensas (ciudades, países, continentes).
+  \item Administrada por \textbf{proveedores de servicios (ISPs)}.
+  \item Los enlaces WAN son generalmente de \textbf{velocidad más lenta} que los enlaces LAN.
+  \item Ejemplos de tecnologías WAN: MPLS, Frame Relay (obsoleto), enlaces seriales.
+\end{itemize}
+}
+
+% ============================================================
+\subsubsection{12.1.5 Modelo de diseño de red de tres capas}
+
+El \textbf{diseño jerárquico de tres capas} es un modelo de arquitectura de red que separa la topología en capas modulares, cada una con funciones específicas. Este modelo facilita la escalabilidad, el mantenimiento y la solución de problemas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img39.png}
+\caption{Modelo jerárquico de tres capas.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  layer/.style={draw, rounded corners=5pt, minimum width=10cm, minimum height=1.8cm, font=\small, align=center, text width=9cm},
+  >=Stealth
+]
+  % Core
+  \node[layer, fill=red!10, draw=red!60!black] (core) at (0,6) {%
+    \textbf{\large Capa de Núcleo Central (Core)}\\[3pt]
+    Backbone de alta velocidad. Interconexión a WAN e Internet.\\
+    Conmutación rápida de grandes volúmenes de tráfico.
+  };
+
+  % Distribution
+  \node[layer, fill=yellow!10, draw=orange!70!black] (dist) at (0,3) {%
+    \textbf{\large Capa de Distribución (Distribution)}\\[3pt]
+    Políticas de red, filtrado, QoS.\\
+    Enrutamiento inter-VLAN, agregación de enlaces, control de acceso.
+  };
+
+  % Access
+  \node[layer, fill=green!10, draw=green!60!black] (acc) at (0,0) {%
+    \textbf{\large Capa de Acceso (Access)}\\[3pt]
+    Switches de acceso conectan dispositivos finales, APs inalámbricos.\\
+    Seguridad de puerto, VLANs, PoE para teléfonos IP y APs.
+  };
+
+  % Arrows
+  \draw[<->, very thick, gray] (core.south) -- (dist.north);
+  \draw[<->, very thick, gray] (dist.south) -- (acc.north);
+
+  % Labels
+  \node[right=0.3cm of core, font=\footnotesize\itshape, text width=3cm] {Alta velocidad\\Baja latencia};
+  \node[right=0.3cm of dist, font=\footnotesize\itshape, text width=3cm] {Políticas\\Filtrado};
+  \node[right=0.3cm of acc, font=\footnotesize\itshape, text width=3cm] {Usuarios\\finales};
+\end{tikzpicture}
+\caption{Modelo simplificado de tres capas: Acceso, Distribución y Núcleo Central.}
+\end{figure}
+
+% ============================================================
+\subsection{12.2 Dispositivos de seguridad}
+
+\subsubsection{12.2.2 Firewalls}
+
+Un \textbf{firewall} es un sistema que impone una \textbf{política de control de acceso} entre redes. Es uno de los dispositivos de seguridad más fundamentales en cualquier infraestructura de red.
+
+\conceptbox{Reglas típicas de un firewall}{%
+\textbf{PERMITIR:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Tráfico a servidor web (HTTP/HTTPS)
+  \item Tráfico FTP
+  \item Tráfico SMTP (correo saliente)
+  \item Tráfico IMAP (correo entrante)
+\end{itemize}
+\textbf{DENEGAR:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Tráfico entrante con IPs internas falsificadas (spoofing)
+  \item Tráfico entrante de direcciones externas al servidor interno
+  \item Solicitudes ICMP echo (ping) desde fuera
+  \item Consultas MS Active Directory
+  \item Consultas MS SQL
+  \item Difusiones locales de dominio MS
+\end{itemize}
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img26.png}
+\caption{Funcionamiento del firewall: reglas de permitir y denegar.}
+\end{figure}
+
+\textbf{Propiedades comunes de los firewalls:}
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Resistente a ataques:} El firewall mismo debe estar protegido y endurecido.
+  \item \textbf{Único punto de tránsito:} Todo el tráfico entre redes debe pasar a través del firewall.
+  \item \textbf{Aplica la política de control de acceso:} Solo permite el tráfico autorizado.
+\end{itemize}
+
+\textbf{Ventajas:}
+\begin{itemize}[leftmargin=2em]
+  \item Evitan la exposición de hosts, recursos y aplicaciones a usuarios no confiables.
+  \item Sanean (sanitizan) el flujo de protocolos, eliminando paquetes malformados.
+  \item Bloquean datos maliciosos antes de que lleguen a los hosts internos.
+  \item Simplifican la administración de seguridad al centralizar las políticas.
+\end{itemize}
+
+\textbf{Limitaciones:}
+\begin{itemize}[leftmargin=2em]
+  \item Si está mal configurado, puede convertirse en un \textbf{punto único de falla}.
+  \item No puede asegurar los datos de todas las aplicaciones (especialmente las cifradas).
+  \item Los usuarios pueden buscar maneras de \textbf{esquivarlo} (por ejemplo, usando túneles).
+  \item Puede \textbf{reducir la velocidad} de la red al inspeccionar el tráfico.
+  \item El tráfico no autorizado puede \textbf{tunelizarse} u ocultarse como tráfico legítimo.
+\end{itemize}
+
+% ============================================================
+\subsubsection{12.2.3 Tipos de firewall}
+
+\textbf{1. Firewall de filtrado de paquetes (sin estado / stateless):}
+\begin{itemize}[leftmargin=2em]
+  \item Opera en \textbf{Capas 3 y 4} del modelo OSI.
+  \item Filtra según: IP de origen, IP de destino, protocolo, puerto de origen, puerto de destino, paquetes SYN.
+  \item Cada paquete se evalúa de forma \textbf{independiente}, sin considerar el estado de la conexión.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[>=Stealth]
+  % OSI layers
+  \foreach \i/\name/\col in {7/Aplicación/gray!10, 6/Presentación/gray!10, 5/Sesión/gray!10, 4/Transporte/orange!20, 3/Red/orange!20, 2/Enlace de datos/gray!10, 1/Física/gray!10} {
+    \pgfmathsetmacro{\y}{(\i-1)*0.7}
+    \node[draw, minimum width=5cm, minimum height=0.55cm, font=\small, align=center, fill=\col]
+      (L\i) at (0,\y) {\textbf{Capa \i:} \name};
+  }
+  % Colored bars on the right side showing range of each firewall type
+  % Stateless (layers 3-4) — red bar
+  \fill[red!70!black] (2.8,1.12) rectangle (3.0,2.38);
+  \node[right=0.3cm, font=\scriptsize\bfseries, text=red!70!black, align=left] at (3.0,1.75)
+    {Filtrado de paquetes\\(stateless)};
+  % Stateful (layers 3-5) — blue bar
+  \fill[medblue] (3.0,1.12) rectangle (3.2,3.08);
+  \node[right=0.3cm, font=\scriptsize\bfseries, text=medblue, align=left] at (3.2,3.08)
+    {Stateful (con estado)};
+  % Proxy (layers 3-7) — green bar
+  \fill[green!60!black] (3.2,1.12) rectangle (3.4,4.48);
+  \node[right=0.3cm, font=\scriptsize\bfseries, text=green!60!black, align=left] at (3.4,4.48)
+    {Proxy / Gateway\\de aplicaciones};
+\end{tikzpicture}
+\caption{Capas del modelo OSI en las que opera cada tipo de firewall.}
+\end{figure}
+
+\textbf{2. Firewall con detección de estado (stateful):}
+\begin{itemize}[leftmargin=2em]
+  \item Es el tipo \textbf{más versátil y más usado}.
+  \item Mantiene una \textbf{tabla de estados de conexión} que registra las sesiones activas.
+  \item Opera en \textbf{Capas 3, 4 y 5} del modelo OSI.
+  \item Puede determinar si un paquete pertenece a una conexión ya establecida o es un intento nuevo.
+\end{itemize}
+
+\textbf{3. Firewall de gateway de aplicaciones (proxy):}
+\begin{itemize}[leftmargin=2em]
+  \item Filtra según información de \textbf{Capas 3, 4, 5 y 7}.
+  \item Proporciona un control y filtrado \textbf{más granular} al inspeccionar el contenido de la aplicación.
+  \item Actúa como intermediario entre el cliente y el servidor.
+\end{itemize}
+
+\textbf{4. Firewall de próxima generación (NGFW --- Next Generation Firewall):}
+\begin{itemize}[leftmargin=2em]
+  \item Combina firewall stateful con \textbf{inspección profunda de paquetes (DPI)}.
+  \item Incluye funcionalidades de \textbf{IPS} (Sistema de Prevención de Intrusiones).
+  \item Ofrece \textbf{control de aplicaciones} (identifica aplicaciones independientemente del puerto).
+\end{itemize}
+
+\textbf{Otros métodos de firewall:}
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Firewall basado en host (servidor/personal):} Software instalado en una computadora individual. Protege solo ese equipo.
+  \item \textbf{Firewall transparente:} Filtra tráfico IP entre interfaces conectadas con puente (bridge), sin modificar las direcciones IP.
+  \item \textbf{Firewall híbrido:} Combinación de varios tipos de firewall para maximizar la protección.
+\end{itemize}
+
+% ============================================================
+\subsubsection{12.1.7 Arquitecturas de seguridad comunes}
+
+\textbf{1. Privado y público:}
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Red pública (externa):} Considerada \emph{no confiable} (Internet).
+  \item \textbf{Red privada (interna):} Considerada \emph{confiable} (red de la organización).
+  \item El firewall separa ambas redes con \textbf{dos interfaces}.
+  \item \textbf{Tráfico de privada a pública:} se inspecciona y se permite.
+  \item \textbf{Tráfico de pública a privada:} se \textbf{BLOQUEA} por defecto.
+\end{itemize}
+
+\textbf{2. Zona desmilitarizada (DMZ):}
+
+La DMZ agrega una tercera zona entre la red pública y la privada, donde se colocan los servidores que necesitan ser accesibles desde Internet.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{11_img44.png}
+\caption{Arquitectura DMZ: tres zonas con reglas de tráfico diferenciadas.}
+\end{figure}
+
+\keybox{Reglas de tráfico en la arquitectura DMZ}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Privada $\rightarrow$ Pública / DMZ:} Permitido casi sin restricciones.
+  \item \textbf{DMZ $\rightarrow$ Privada:} \textbf{Bloqueado} frecuentemente (un servidor comprometido en la DMZ no debe poder acceder a la red interna).
+  \item \textbf{DMZ $\rightarrow$ Pública:} Permitido si cumple los requisitos de servicio.
+  \item \textbf{Pública $\rightarrow$ DMZ:} Selectivamente permitido (email, DNS, HTTP, HTTPS).
+  \item \textbf{Pública $\rightarrow$ Privada:} \textbf{BLOQUEADO} completamente.
+\end{itemize}
+}
+
+\textbf{3. Firewall de políticas basadas en zonas (ZPF):}
+
+\conceptbox{Zone-Based Policy Firewall (ZPF)}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Las \textbf{zonas} agrupan interfaces con funciones o niveles de confianza similares.
+  \item Tráfico entre interfaces de la \textbf{misma zona}: pasa \textbf{libremente}.
+  \item Tráfico \textbf{entre zonas diferentes}: \textbf{bloqueado por defecto}; necesita una política explícita para permitirlo.
+  \item \textbf{Excepción:} La \emph{zona autónoma del router} (self zone) maneja el tráfico \emph{al/desde el router mismo}. Incluye protocolos como SSH, SNMP y protocolos de enrutamiento.
+\end{itemize}
+}
+
+% ============================================================
+\subsubsection{12.2.5 IDS e IPS}
+
+Tanto el \textbf{IDS} como el \textbf{IPS} se implementan como \textbf{sensores} que analizan el tráfico de red en busca de actividad maliciosa. Ambos utilizan \textbf{firmas} (conjuntos de reglas) para detectar patrones de tráfico sospechoso.
+
+Las firmas pueden ser:
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Atómicas:} Detectan patrones en un \emph{solo paquete}.
+  \item \textbf{Compuestas:} Detectan patrones que se extienden a través de \emph{varios paquetes}.
+\end{itemize}
+
+Los sensores pueden implementarse como: router con IOS IPS, dispositivo dedicado, o módulo dentro de un ASA, switch o router.
+
+\conceptbox{IDS --- Sistema de Detección de Intrusiones}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Funciona en \textbf{modo sin conexión (pasivo)}: recibe una \emph{copia} del tráfico para analizarla.
+  \item \textbf{NO puede detener} paquetes maliciosos porque no está en la ruta del tráfico.
+  \item Solo \textbf{detecta, registra e informa} sobre actividad sospechosa.
+  \item No introduce latencia en la red.
+\end{itemize}
+}
+
+\conceptbox{IPS --- Sistema de Prevención de Intrusiones}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Implementado \textbf{en línea (inline)}: \emph{todo} el tráfico pasa a través de él.
+  \item \textbf{PUEDE detener} paquetes maliciosos \textbf{en tiempo real}, antes de que lleguen al destino.
+  \item Puede usar \textbf{normalización de transmisiones} para reconstruir flujos y detectar ataques de evasión.
+  \item Introduce cierta latencia al inspeccionar cada paquete.
+\end{itemize}
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img14.png}
+\caption{Funcionamiento del IPS: 1) tráfico malicioso, 2) IPS intercepta, 3) registra en consola, 4) elimina tráfico.}
+\end{figure}
+
+% ============================================================
+\subsubsection{12.2.6 Ventajas y desventajas de IDS e IPS}
+
+\begin{table}[H]
+\centering
+\caption{Comparación de ventajas y desventajas de IDS e IPS}
+\rowcolors{2}{white}{lightblue}
+\begin{tabular}{>{\bfseries}p{1.2cm} p{6cm} p{6cm}}
+\toprule
+& \textbf{Ventajas} & \textbf{Desventajas} \\
+\midrule
+IDS &
+  \begin{itemize}[leftmargin=1em, topsep=0pt, itemsep=1pt]
+    \item Sin impacto en la red (no genera latencia ni fluctuación).
+    \item Sin impacto si el sensor falla o se sobrecarga.
+  \end{itemize} &
+  \begin{itemize}[leftmargin=1em, topsep=0pt, itemsep=1pt]
+    \item No puede detener paquetes activadores (maliciosos).
+    \item Requiere afinación constante para reducir falsos positivos.
+    \item Más vulnerable a técnicas de evasión.
+  \end{itemize} \\
+\midrule
+IPS &
+  \begin{itemize}[leftmargin=1em, topsep=0pt, itemsep=1pt]
+    \item Detiene paquetes activadores en tiempo real.
+    \item Puede usar normalización de transmisiones.
+  \end{itemize} &
+  \begin{itemize}[leftmargin=1em, topsep=0pt, itemsep=1pt]
+    \item Errores, fallas o sobrecarga afectan directamente la red.
+    \item Introduce latencia y fluctuación (jitter).
+    \item Debe dimensionarse correctamente para el volumen de tráfico.
+  \end{itemize} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\keybox{Consideración importante}{%
+IDS e IPS son tecnologías \textbf{complementarias}, no mutuamente excluyentes. En una arquitectura de seguridad robusta, se puede implementar IDS para \textbf{validar el funcionamiento del IPS} y tener una capa adicional de visibilidad.
+}
+
+% ============================================================
+\subsubsection{12.2.7 Tipos de IPS}
+
+\conceptbox{HIPS --- IPS basado en host}{%
+Es un \textbf{software instalado en un host individual} que monitorea el sistema operativo y los procesos que se ejecutan en él.
+
+\textbf{Detecta:}
+\begin{itemize}[leftmargin=1.5em]
+  \item Actualizaciones de registro no autorizadas
+  \item Cambios en el directorio del sistema
+  \item Ejecución de programas sospechosos
+  \item Intentos de desbordamiento de búfer (buffer overflow)
+  \item Ataques de Denegación de Servicio (DoS)
+  \item Transferencias FTP ilícitas
+\end{itemize}
+
+\textbf{Combina funcionalidades de:} firewall + antivirus + antimalware en un solo agente.
+
+\textbf{Ventajas:} Proporciona protección específica para el SO y las aplicaciones del host.\\
+\textbf{Desventajas:} Depende del SO; debe instalarse en \textbf{todos} los hosts que se deseen proteger.
+}
+
+\conceptbox{IPS basado en red}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Utiliza \textbf{sensores en puntos estratégicos} de la red.
+  \item Detecta actividad maliciosa \textbf{en tiempo real} analizando el tráfico que pasa por el sensor.
+  \item Es un componente fundamental de la prevención de intrusiones a nivel de red.
+  \item Debe integrarse con HIPS para lograr una arquitectura de seguridad sólida y completa.
+\end{itemize}
+}
+
+% ============================================================
+\subsubsection{12.2.8 Dispositivos de seguridad especializados}
+
+\conceptbox{AMP --- Cisco Advanced Malware Protection}{%
+Proporciona protección \textbf{antes, durante y después} de los ataques:
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{Antes:}] Fortalece las defensas contra amenazas conocidas y emergentes.
+  \item[\textbf{Durante:}] Identifica y bloquea archivos maliciosos en tiempo real.
+  \item[\textbf{Después:}] Analiza y controla continuamente archivos sospechosos. Detecta comportamiento malicioso que se manifiesta después de la entrega.
+\end{description}
+Utiliza la inteligencia de \textbf{Cisco Talos} para detección en tiempo real de amenazas globales.
+}
+
+\conceptbox{WSA --- Cisco Web Security Appliance}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Actúa como \textbf{gateway de web seguro}.
+  \item Bloquea automáticamente sitios peligrosos y contenido malicioso.
+  \item Ofrece protección contra malware, visibilidad de aplicaciones web y políticas de uso aceptable.
+  \item \textbf{Limitación:} No protege a los usuarios cuando están \emph{fuera} de la red protegida (por ejemplo, en Wi-Fi pública).
+  \item \textbf{CWS (Cisco Cloud Web Security):} Versión en la nube que extiende la protección a trabajadores remotos.
+\end{itemize}
+}
+
+\conceptbox{ESA --- Cisco Email Security Appliance}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Reduce las amenazas transmitidas por \textbf{correo electrónico}.
+  \item Utiliza \textbf{inteligencia global de amenazas} de Cisco Talos.
+  \item Bloqueo de correo no deseado (spam) \textbf{multicapa}: combina filtrado por reputación del remitente con filtrado de contenido.
+  \item Protección avanzada contra malware mediante la red Sourcefire.
+  \item Control de mensajes salientes para prevenir fuga de datos (DLP).
+\end{itemize}
+}
+
+% ============================================================
+\subsection{12.3 Servicios de seguridad de red}
+
+\subsubsection{12.3.2 ACLs --- Listas de Control de Acceso}
+
+Las \textbf{ACLs (Access Control Lists)} son mecanismos de filtrado que se configuran en routers y switches para controlar qué tráfico se permite o se deniega.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{11_img16.png}
+\caption{Topología con ACLs aplicadas en cada router (R1, R2, R3).}
+\end{figure}
+
+\conceptbox{Tipos de ACL}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{ACL estándar:}] Filtra \textbf{solo} por dirección IPv4 de \textbf{origen}. Es menos granular pero más sencilla de configurar. Se coloca lo más \emph{cerca posible del destino}.
+  \item[\textbf{ACL extendida:}] Filtra por múltiples atributos:
+    \begin{itemize}[leftmargin=1.5em]
+      \item Tipo de protocolo (TCP, UDP, ICMP, etc.)
+      \item Dirección IPv4 de origen \textbf{y} destino
+      \item Puertos TCP o UDP de origen \textbf{y} destino
+      \item Información de tipo de protocolo adicional
+    \end{itemize}
+    Se coloca lo más \emph{cerca posible del origen}.
+\end{description}
+}
+
+Características adicionales de las ACLs:
+\begin{itemize}[leftmargin=2em]
+  \item Pueden ser \textbf{numeradas} o \textbf{con nombre} (named ACL).
+  \item Se pueden configurar para \textbf{registrar (log)} cuando el tráfico coincide con una regla.
+  \item Se pueden filtrar paquetes TCP con bits \textbf{ACK} o \textbf{RST} activados, lo que permite \textbf{denegar nuevas sesiones TCP externas} mientras se permiten las respuestas a sesiones iniciadas internamente.
+\end{itemize}
+
+% ============================================================
+\subsubsection{12.3.4 NTP --- Network Time Protocol}
+
+El \textbf{NTP (Network Time Protocol)} permite sincronizar los relojes de los dispositivos de red con fuentes horarias precisas. Una sincronización correcta es esencial para el análisis de logs, la correlación de eventos de seguridad y los certificados digitales.
+
+Los servidores NTP se organizan en \textbf{niveles jerárquicos llamados estratos}:
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  srv/.style={draw, rounded corners=2pt, minimum width=1.3cm, minimum height=0.7cm, font=\scriptsize, fill=#1},
+  >=Stealth
+]
+  % Stratum 0
+  \node[srv=red!15, minimum width=2.5cm] (s0) at (0,6) {\textbf{Estrato 0}};
+  \node[right=0.5cm of s0, font=\scriptsize\itshape] {Relojes atómicos, GPS};
+
+  % Stratum 1
+  \node[srv=orange!15] (s1a) at (-1.2,4.5) {Servidor};
+  \node[srv=orange!15] (s1b) at (1.2,4.5) {Servidor};
+  \node[right=0.5cm of s1b, font=\scriptsize\itshape] {Estrato 1};
+
+  % Stratum 2
+  \node[srv=yellow!15] (s2a) at (-2.4,3) {Srv};
+  \node[srv=yellow!15] (s2b) at (-0.8,3) {Srv};
+  \node[srv=yellow!15] (s2c) at (0.8,3) {Srv};
+  \node[srv=yellow!15] (s2d) at (2.4,3) {Srv};
+  \node[right=0.5cm of s2d, font=\scriptsize\itshape] {Estrato 2};
+
+  % Stratum 3
+  \node[srv=green!10, minimum width=0.9cm] (s3a) at (-3.5,1.5) {Srv};
+  \node[srv=green!10, minimum width=0.9cm] (s3b) at (-2.1,1.5) {Srv};
+  \node[srv=green!10, minimum width=0.9cm] (s3c) at (-0.7,1.5) {Srv};
+  \node[srv=green!10, minimum width=0.9cm] (s3d) at (0.7,1.5) {Srv};
+  \node[srv=green!10, minimum width=0.9cm] (s3e) at (2.1,1.5) {Srv};
+  \node[srv=green!10, minimum width=0.9cm] (s3f) at (3.5,1.5) {Srv};
+  \node[right=0.5cm of s3f, font=\scriptsize\itshape] {Estrato 3};
+
+  % Connections
+  \draw[->,thick] (s0) -- (s1a);
+  \draw[->,thick] (s0) -- (s1b);
+  \draw[->,gray] (s1a) -- (s2a);
+  \draw[->,gray] (s1a) -- (s2b);
+  \draw[->,gray] (s1b) -- (s2c);
+  \draw[->,gray] (s1b) -- (s2d);
+  \draw[->,gray!60] (s2a) -- (s3a);
+  \draw[->,gray!60] (s2a) -- (s3b);
+  \draw[->,gray!60] (s2b) -- (s3c);
+  \draw[->,gray!60] (s2c) -- (s3d);
+  \draw[->,gray!60] (s2d) -- (s3e);
+  \draw[->,gray!60] (s2d) -- (s3f);
+\end{tikzpicture}
+\caption{Jerarquía de estratos NTP: desde el reloj atómico (estrato 0) hasta los servidores de estrato 3.}
+\end{figure}
+
+\conceptbox{Estratos NTP}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{Estrato 0:}] Fuentes horarias autorizadas de alta precisión: relojes atómicos, sistemas GPS. No son servidores NTP en sí mismos.
+  \item[\textbf{Estrato 1:}] Servidores conectados \emph{directamente} a fuentes de estrato 0. Son el estándar horario de la red.
+  \item[\textbf{Estrato 2 y superiores:}] Servidores conectados al estrato anterior via red. Pueden actuar como servidores para el estrato siguiente.
+  \item[\textbf{Máximo:}] 15 saltos. \textbf{Estrato 16 = NO sincronizado} (dispositivo no confiable).
+\end{description}
+}
+
+% ============================================================
+\subsubsection{12.3.5 SNMP --- Simple Network Management Protocol}
+
+\textbf{SNMP} es un protocolo de \textbf{capa de aplicación} utilizado para gestionar y monitorear terminales y dispositivos en redes IP.
+
+\conceptbox{Componentes del sistema SNMP}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{Administrador de SNMP (NMS):}] Estación de administración que ejecuta software de gestión de red. Envía mensajes \texttt{get} (solicitar información) y \texttt{set} (modificar configuración) a los agentes.
+  \item[\textbf{Agentes de SNMP:}] Software residente en los nodos monitoreados (routers, switches, servidores). Recopilan información local y envían \texttt{traps} (notificaciones de eventos) al administrador.
+  \item[\textbf{MIB (Management Information Base):}] Base de datos jerárquica que almacena las estadísticas operativas y la información de configuración de cada dispositivo. Cada variable se identifica con un OID (Object Identifier).
+\end{description}
+}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{11_img6.png}
+\caption{Sistema SNMP: el administrador usa get/set y los agentes envían traps.}
+\end{figure}
+
+% ============================================================
+\subsubsection{12.3.6 NetFlow}
+
+\textbf{NetFlow} es una tecnología de Cisco IOS que recopila \textbf{estadísticas de los paquetes} que atraviesan routers y switches de Capa 3. Es fundamental para el análisis de tráfico y la detección de anomalías.
+
+\conceptbox{Los 7 campos que identifican un flujo NetFlow}{%
+\begin{enumerate}[leftmargin=2em]
+  \item Dirección IP de origen
+  \item Dirección IP de destino
+  \item Número de puerto de origen
+  \item Número de puerto de destino
+  \item Tipo de protocolo de capa 3
+  \item Marca de tipo de servicio (ToS)
+  \item Interfaz lógica de entrada
+\end{enumerate}
+Un \textbf{flujo} se define como una combinación única de estos 7 campos. Cada flujo diferente se contabiliza por separado.
+}
+
+\textbf{Usos principales de NetFlow:}
+\begin{itemize}[leftmargin=2em]
+  \item Monitoreo de red y análisis de tráfico
+  \item Monitoreo de seguridad (detección de patrones anómalos)
+  \item Planificación de capacidad
+  \item Identificación de cuellos de botella
+  \item Contabilidad de IP (facturación por uso)
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{11_img30.png}
+\caption{NetFlow: el router analiza tráfico y envía estadísticas al recopilador.}
+\end{figure}
+
+% ============================================================
+\subsubsection{12.3.8 Servidores Syslog}
+
+El \textbf{protocolo syslog} permite que los dispositivos de red envíen \textbf{mensajes del sistema} a servidores de registro centralizados (servidores syslog).
+
+\conceptbox{Tres funciones principales de syslog}{%
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{Recopilar} información de registro para control y solución de problemas.
+  \item \textbf{Escoger} el tipo de información de registro a capturar (nivel de severidad).
+  \item \textbf{Especificar} el destino de los mensajes syslog capturados (consola, buffer, servidor remoto).
+\end{enumerate}
+}
+
+Los dispositivos que soportan syslog incluyen: \textbf{routers, switches, servidores de aplicación y firewalls}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{11_img34.png}
+\caption{R1 y S1 envían mensajes de sistema al servidor Syslog.}
+\end{figure}
+
+% ============================================================
+\subsubsection{12.3.10 Servidores AAA}
+
+El marco arquitectónico \textbf{AAA} define tres funciones de seguridad independientes para controlar el acceso a los recursos de red:
+
+\conceptbox{Las tres funciones de AAA}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{Autenticación (Authentication):}] \emph{``\textquestiondown Quién sos?''} --- Verifica la identidad del usuario. Métodos: usuario/contraseña, preguntas de seguridad, tarjetas token, biometría. Proporciona una forma centralizada de controlar el acceso.
+  \item[\textbf{Autorización (Authorization):}] \emph{``\textquestiondown Qué podés hacer?''} --- Determina qué recursos puede acceder el usuario y qué operaciones puede realizar una vez autenticado.
+  \item[\textbf{Contabilidad (Accounting):}] \emph{``\textquestiondown Qué hiciste?''} --- Registra las acciones del usuario: qué accedió, durante cuánto tiempo, qué cambios realizó. Fundamental para auditoría y cumplimiento.
+\end{description}
+}
+
+\begin{table}[H]
+\centering
+\caption{Comparación TACACS+ vs RADIUS}
+\rowcolors{2}{white}{lightblue}
+\begin{tabular}{>{\bfseries}p{3.5cm} p{5cm} p{5cm}}
+\toprule
+\textbf{Característica} & \textbf{TACACS+} & \textbf{RADIUS} \\
+\midrule
+Cifrado & Cifra \textbf{todo} el intercambio completo & Solo cifra la \textbf{contraseña} \\
+Protocolo & \textbf{TCP} (más fiable) & \textbf{UDP} (más rápido) \\
+Funcionalidad & \textbf{Separa} autenticación, autorización y contabilidad & \textbf{Combina} autenticación y autorización \\
+Personalización & Mayor \textbf{control granular} & Menos flexible \\
+Seguridad & \textbf{Más seguro} & Menos seguro \\
+Admin. de dispositivos & \textbf{Sí} (ideal para acceso administrativo) & No es ideal para este propósito \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\keybox{Cuándo usar cada uno}{%
+\textbf{TACACS+:} Ideal para \emph{administración de dispositivos de red} (acceso a routers, switches). Ofrece mayor granularidad y seguridad. Protocolo propietario de Cisco.\\
+\textbf{RADIUS:} Más usado para \emph{acceso de usuarios a la red} (autenticación Wi-Fi, VPN de acceso remoto). Es un estándar abierto (RFC 2865).
+}
+
+% ============================================================
+\subsubsection{12.3.11 VPN --- Red Privada Virtual}
+
+Una \textbf{VPN (Virtual Private Network)} es una red privada creada sobre una red pública (típicamente Internet). Permite a los usuarios remotos acceder a los recursos de la red corporativa de forma segura, como si estuvieran conectados directamente a la LAN interna.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{11_img31.png}
+\caption{VPN: conexiones privadas sobre Internet desde sucursal, usuario móvil y SOHO hacia el sitio central.}
+\end{figure}
+
+\conceptbox{Beneficios de las VPN}{%
+\begin{description}[leftmargin=1em, style=nextline]
+  \item[\textbf{Ahorro de costos:}] Utiliza Internet en lugar de líneas dedicadas (leased lines), que son significativamente más costosas.
+  \item[\textbf{Seguridad:}] Los datos viajan \textbf{cifrados} a través del túnel VPN, protegidos contra interceptación.
+  \item[\textbf{Escalabilidad:}] Es fácil agregar nuevos usuarios y sitios remotos sin necesidad de infraestructura física adicional.
+  \item[\textbf{Compatibilidad con banda ancha:}] Funciona sobre cualquier conexión a Internet (DSL, cable, fibra, 4G/5G).
+\end{description}
+}
+
+\keybox{Tipos comunes de VPN}{%
+\textbf{VPN de sitio a sitio (Site-to-Site):} Conecta redes completas entre sí (por ejemplo, la oficina central con una sucursal). Los routers o firewalls de cada sitio establecen el túnel.\\
+\textbf{VPN de acceso remoto (Remote Access):} Permite a usuarios individuales conectarse a la red corporativa desde cualquier ubicación. Utiliza un cliente VPN en el dispositivo del usuario.
+}
+
+% ============================================================
+\newpage
+\section*{Resumen general}
+\addcontentsline{toc}{section}{Resumen general}
+
+\keybox{Capítulo 11 --- Conceptos clave}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item Los \textbf{routers} operan en Capa 3 y cambian las MACs en cada salto, pero las IPs se mantienen.
+  \item Los \textbf{switches} aprenden MACs de origen y reenvían según MACs de destino; hacen flooding si no conocen el destino.
+  \item Las \textbf{VLANs} segmentan lógicamente la red; requieren router o switch multicapa para comunicación inter-VLAN.
+  \item \textbf{STP} previene bucles de Capa 2 bloqueando puertos redundantes.
+  \item Las WLANs usan \textbf{CSMA/CA} con RTS/CTS porque no pueden detectar colisiones.
+  \item \textbf{LWAP + WLC} simplifican la administración inalámbrica en redes grandes.
+\end{itemize}
+}
+
+\keybox{Capítulo 12 --- Conceptos clave}{%
+\begin{itemize}[leftmargin=1.5em]
+  \item El modelo de \textbf{tres capas} (Acceso, Distribución, Núcleo) organiza la red jerárquicamente.
+  \item Los \textbf{firewalls} van desde stateless (Capa 3-4) hasta NGFW (inspección profunda + IPS).
+  \item La \textbf{DMZ} aloja servidores públicos; el tráfico Pública $\rightarrow$ Privada siempre se bloquea.
+  \item \textbf{IDS} detecta (pasivo); \textbf{IPS} previene (en línea). Son complementarios.
+  \item \textbf{AAA}: Autenticación + Autorización + Contabilidad. TACACS+ cifra todo; RADIUS solo la contraseña.
+  \item \textbf{VPN} crea túneles cifrados sobre Internet para conectar sitios y usuarios remotos.
+  \item \textbf{NTP, SNMP, NetFlow, Syslog} son servicios esenciales de monitoreo y gestión.
+\end{itemize}
+}
+
+\end{document}
